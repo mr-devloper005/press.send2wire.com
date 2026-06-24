@@ -23,12 +23,6 @@ export async function generateMetadata(): Promise<Metadata> {
 const stripHtml = (value: string) => value.replace(/<[^>]*>/g, ' ')
 const compactText = (value: unknown) => typeof value === 'string' ? stripHtml(value).replace(/\s+/g, ' ').trim().toLowerCase() : ''
 const getContent = (post: SitePost) => post.content && typeof post.content === 'object' ? post.content as Record<string, unknown> : {}
-const getImage = (post: SitePost) => {
-  const content = getContent(post)
-  const media = Array.isArray(post.media) ? post.media.find((item) => typeof item?.url === 'string')?.url : ''
-  const images = Array.isArray(content.images) ? content.images.find((item) => typeof item === 'string') as string | undefined : ''
-  return media || compactRaw(content.featuredImage) || compactRaw(content.image) || compactRaw(content.thumbnail) || images || ''
-}
 const compactRaw = (value: unknown) => typeof value === 'string' ? value.trim() : ''
 const summaryOf = (post: SitePost) => post.summary || compactRaw(getContent(post).description) || compactRaw(getContent(post).excerpt) || ''
 
@@ -49,22 +43,14 @@ const matches = (post: SitePost, query: string, category: string, task: string) 
 function SearchResultCard({ post, index }: { post: SitePost; index: number }) {
   const task = getPostTaskKey(post) as TaskKey | null
   const href = task ? buildPostUrl(task, post.slug) : `/article/${post.slug}`
-  const image = getImage(post)
   const summary = summaryOf(post)
   const taskLabel = SITE_CONFIG.tasks.find((item) => item.key === task)?.label || 'Post'
   const strong = index % 5 === 0
 
   return (
     <Link href={href} className={`group block overflow-hidden border-b border-r border-black bg-white ${strong ? 'md:col-span-2' : ''}`}>
-      {image ? (
-        <div className={`relative overflow-hidden bg-black ${strong ? 'aspect-[16/7]' : 'aspect-[16/10]'}`}>
-          <img src={image} alt="" className="h-full w-full object-cover opacity-90 transition duration-500 group-hover:scale-105" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-          <span className="absolute left-4 top-4 bg-[#c92f2f] px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-white">{taskLabel}</span>
-        </div>
-      ) : null}
       <div className="p-5 sm:p-6">
-        {!image ? <span className="bg-[#c92f2f] px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-white">{taskLabel}</span> : null}
+        <span className="bg-[#c92f2f] px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-white">{taskLabel}</span>
         <h2 className="editorial-serif mt-4 line-clamp-3 text-2xl font-black leading-[1.03] tracking-[-0.035em] text-black">{post.title}</h2>
         {summary ? <p className="mt-4 line-clamp-3 text-sm font-semibold leading-7 text-[var(--editable-page-text,#211713)]/65">{summary}</p> : null}
         <span className="mt-5 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em] opacity-60 group-hover:opacity-100">Open result <ArrowRight className="h-4 w-4" /></span>
