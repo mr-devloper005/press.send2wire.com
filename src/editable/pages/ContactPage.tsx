@@ -14,28 +14,38 @@ const desks = [
 export default function ContactPage() {
   return (
     <EditableSiteShell>
-      <main className="bg-[#f7f4ef] text-[#111]">
-        <section className="border-b border-black bg-white">
-          <div className="mx-auto max-w-[var(--editable-container)] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
-            <p className="text-xs font-black uppercase tracking-[0.28em] text-[#c92f2f]">{pagesContent.contact.eyebrow}</p>
-            <h1 className="editorial-brand mt-4 max-w-5xl text-6xl font-black leading-[0.92] tracking-[-0.055em] sm:text-8xl">{pagesContent.contact.title}</h1>
-            <p className="mt-6 max-w-2xl border-l-4 border-[#c92f2f] pl-5 text-base font-semibold leading-8 text-black/65">{pagesContent.contact.description}</p>
+      <main className="bg-transparent text-[var(--slot4-page-text)]">
+        <section className="mx-auto max-w-[var(--editable-container)] px-4 py-10 sm:px-6 lg:px-10 lg:py-14">
+          <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-end">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[var(--slot4-soft-muted-text)]">{pagesContent.contact.eyebrow}</p>
+              <h1 className="mt-4 max-w-5xl text-5xl font-semibold leading-[0.94] tracking-[-0.08em] sm:text-6xl lg:text-[5rem]">{pagesContent.contact.title}</h1>
+              <p className="mt-6 max-w-2xl text-base leading-8 text-[var(--slot4-muted-text)]">{pagesContent.contact.description}</p>
+            </div>
+            <div className="rounded-[2.25rem] bg-[linear-gradient(180deg,#dcebdc_0%,#e3def7_100%)] p-6 shadow-[0_22px_70px_rgba(24,32,25,0.1)] sm:p-8">
+              <div className="rounded-[1.75rem] bg-[rgba(251,252,244,0.84)] p-6">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-[var(--slot4-accent)]">Contact options</p>
+                <p className="mt-4 text-base leading-8 text-[var(--slot4-page-text)]">
+                  Route editorial, publishing, partnership, and support requests through one polished contact flow.
+                </p>
+              </div>
+            </div>
           </div>
         </section>
 
-        <section className="mx-auto grid max-w-[var(--editable-container)] border-x border-black bg-white lg:grid-cols-[0.72fr_1.28fr]">
-          <aside className="border-b border-black bg-[#171717] text-white lg:border-b-0 lg:border-r">
+        <section className="mx-auto grid max-w-[var(--editable-container)] gap-8 px-4 pb-12 sm:px-6 lg:grid-cols-[0.78fr_1.22fr] lg:px-10 lg:pb-16">
+          <aside className="rounded-[2.5rem] bg-[var(--slot4-page-text)] text-[var(--slot4-dark-text)] shadow-[0_28px_80px_rgba(24,32,25,0.18)]">
             {desks.map((desk, index) => (
-              <div key={desk.title} className="border-b border-white/25 p-7 last:border-b-0 sm:p-9">
-                <div className="flex items-center justify-between"><desk.icon className="h-5 w-5 text-[#f34a43]" /><span className="text-xs font-black text-white/45">0{index + 1}</span></div>
-                <h2 className="editorial-serif mt-6 text-3xl font-black">{desk.title}</h2>
+              <div key={desk.title} className="border-b border-white/15 p-7 last:border-b-0 sm:p-9">
+                <div className="flex items-center justify-between"><desk.icon className="h-5 w-5 text-[var(--slot4-accent-soft)]" /><span className="text-xs font-semibold text-white/45">0{index + 1}</span></div>
+                <h2 className="mt-6 text-3xl font-semibold tracking-[-0.05em]">{desk.title}</h2>
                 <p className="mt-3 text-sm leading-7 text-white/65">{desk.body}</p>
               </div>
             ))}
           </aside>
-          <div className="p-6 sm:p-10 lg:p-14">
-            <p className="text-xs font-black uppercase tracking-[0.22em] text-[#c92f2f]">Send a message</p>
-            <h2 className="editorial-serif mt-3 text-4xl font-black">{pagesContent.contact.formTitle}</h2>
+          <div className="rounded-[2.5rem] border border-[color:var(--editable-border)] bg-[rgba(251,252,244,0.82)] p-6 shadow-[0_24px_70px_rgba(24,32,25,0.08)] backdrop-blur sm:p-10 lg:p-12">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--slot4-accent)]">Send a message</p>
+            <h2 className="mt-3 text-4xl font-semibold tracking-[-0.05em]">{pagesContent.contact.formTitle}</h2>
             <EditableContactLeadForm />
           </div>
         </section>
